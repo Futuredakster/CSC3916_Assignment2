@@ -24,7 +24,7 @@ app.use(passport.initialize());
 
 var router = express.Router();
 
-// Function to structure JSON response
+// Function to structure JSON o
 function getJSONObjectForMovieRequirement(req) {
     return {
         headers: req.headers || "No headers",
@@ -49,7 +49,7 @@ router.post('/signup', (req, res) => {
     }
 });
 
-// Signin route
+
 router.post('/signin', (req, res) => {
     var user = db.findOne(req.body.username);
 
@@ -66,55 +66,53 @@ router.post('/signin', (req, res) => {
     }
 });
 
-// Movies Route
+
 router.route('/movies')
     .get((req, res) => {
-        var response = getJSONObjectForMovieRequirement(req);
-        response.status = 200;
-        response.message = "GET movies";
-        res.json(response);
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "GET movies";
+        res.json(o);
     })
     .post((req, res) => {
-        var response = getJSONObjectForMovieRequirement(req);
-        response.status = 200;
-        response.message = "movie saved";
-        res.json(response);
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "movie saved";
+        res.json(o);
     })
     .put(authJwtController.isAuthenticated, (req, res) => {
-        var response = getJSONObjectForMovieRequirement(req);
-        response.status = 200;
-        response.message = "movie updated";
-        res.json(response);
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "movie updated";
+        res.json(o);
     })
     .delete(authController.isAuthenticated, (req, res) => {
-        var response = getJSONObjectForMovieRequirement(req);
-        response.status = 200;
-        response.message = "movie deleted";
-        res.json(response);
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "movie deleted";
+        res.json(o);
     })
     .all((req, res) => {
         res.status(405).json({ message: 'HTTP method not supported' });
     });
 
-// Test collection routes (already included in your original file)
+
 router.route('/testcollection')
     .delete(authController.isAuthenticated, (req, res) => {
         console.log(req.body);
-        var response = getJSONObjectForMovieRequirement(req);
-        res.status(200).json(response);
+        var o = getJSONObjectForMovieRequirement(req);
+        res.status(200).json(o);
     })
     .put(authJwtController.isAuthenticated, (req, res) => {
         console.log(req.body);
-        var response = getJSONObjectForMovieRequirement(req);
-        res.status(200).json(response);
+        var o = getJSONObjectForMovieRequirement(req);
+        res.status(200).json(o);
     });
 
-// Use the router
-app.use('/', router);
 
-// Start server
+app.use('/', router);
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Server running on port ${process.env.PORT || 8080}`);
 });
 
-module.exports = app; // For testing only
+module.exports = app; 
